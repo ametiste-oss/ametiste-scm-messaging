@@ -16,6 +16,8 @@ import static org.apache.commons.lang3.Validate.isTrue;
  */
 public class TransportMessage<T> implements Serializable {
 
+    private static final long serialVersionUID = 19L;
+
     private final T source;
     private final Collection<URI> excludes;
 
