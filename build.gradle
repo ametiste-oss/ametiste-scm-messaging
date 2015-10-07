@@ -4,7 +4,7 @@ configure(rootProject) {
 
 allprojects {
     group 'org.ametiste.scm'
-    version '0.0.1-SNAPSHOT'
+    version '0.1.0-SNAPSHOT'
 
     repositories {
         mavenCentral()
@@ -15,6 +15,14 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
     apply from: '../dependencies.gradle'
+
+    apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray-ext-ame-oss.gradle"
+    apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray-ext.gradle"
+
+    apply plugin: 'maven-publish'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     configurations {
         deployerJars
