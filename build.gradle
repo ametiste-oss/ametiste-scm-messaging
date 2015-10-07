@@ -27,7 +27,7 @@ subprojects {
     apply from: '../dependencies.gradle'
 
     apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray-ext-ame-oss.gradle"
-    apply from: "https://raw.githubusercontent.com/abliznyuk/tests/master/g.gradle"
+    apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray-ext.gradle"
 
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'maven-publish'
