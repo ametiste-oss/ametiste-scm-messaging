@@ -1,0 +1,13 @@
+description = 'SCM Message Sender'
+
+apply plugin: 'groovy'
+
+dependencies {
+    compile project(":scm-messages-http")
+
+    compile libraries.httpClient
+    compile libraries.commonLang3
+    compile libraries.jacksonDatabind
+
+    testCompile libraries.spock
+}

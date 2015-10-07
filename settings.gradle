@@ -1,0 +1,7 @@
+rootProject.name = "ametiste-scm-messaging"
+
+include 'scm-messages'
+include 'scm-messages-http'
+include 'scm-message-receiver'
+include 'scm-message-sender'
+include 'scm-message-sender-client'

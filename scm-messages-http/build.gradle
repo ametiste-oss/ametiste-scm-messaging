@@ -1,0 +1,12 @@
+description = 'SCM Messages DTOs for HTTP protocol'
+
+apply plugin: 'groovy'
+
+dependencies {
+    compile project(':scm-messages')
+
+    compile libraries.commonLang3
+    compile libraries.jacksonDatabind
+
+    testCompile libraries.spock
+}

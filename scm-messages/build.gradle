@@ -1,0 +1,9 @@
+description = 'SCM Messages Interfaces'
+
+apply plugin: 'groovy'
+
+dependencies {
+    compile libraries.commonLang3
+
+    testCompile libraries.spock
+}

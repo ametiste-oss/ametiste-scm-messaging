@@ -1,0 +1,14 @@
+description = 'SCM Message Sender Client'
+
+apply plugin: 'groovy'
+
+dependencies {
+    compile project(":scm-message-sender")
+
+    compile libraries.slf4j
+    compile libraries.springBoot
+
+    testCompile libraries.spock
+    testCompile libraries.spockSpring
+    testCompile libraries.springBootTest
+}
