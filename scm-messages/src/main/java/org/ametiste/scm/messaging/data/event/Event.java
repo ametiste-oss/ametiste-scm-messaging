@@ -11,6 +11,8 @@ import static org.apache.commons.lang3.Validate.isTrue;
  */
 public abstract class Event implements Serializable {
 
+    private static final long serialVersionUID = 19L;
+
     private final UUID id;
     private final long timestamp;
 
