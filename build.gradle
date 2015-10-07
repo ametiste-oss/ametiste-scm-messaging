@@ -1,3 +1,5 @@
+import com.sun.xml.internal.ws.encoding.policy.FastInfosetFeatureConfigurator
+
 configure(rootProject) {
     description = 'SCM Messaging Library'
 }
@@ -24,12 +26,20 @@ subprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
+    ext {
+        bintray_vcsUrl = 'https://github.com/ametiste-oss/ametiste-scm-messaging.git'
+    }
+
     configurations {
         deployerJars
         all {
             // check for updates every build
             resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
         }
+    }
+
+    repositories {
+        mavenCentral()
     }
 
     javadoc {
@@ -68,6 +78,10 @@ subprojects {
 
 apply plugin: 'groovy'
 apply from: 'dependencies.gradle'
+
+jar {
+    enabled = false
+}
 
 dependencies {
     testCompile project(":scm-message-receiver")
