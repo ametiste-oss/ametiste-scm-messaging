@@ -7,6 +7,7 @@ ext {
     spockVersion = '1.0-groovy-2.4'
     springVersion = '4.2.1.RELEASE'
     springBootVersion = '1.2.5.RELEASE'
+    springDataMongoVersion = '1.8.0.RELEASE'
 
     libraries = [
             commonLang3     : "org.apache.commons:commons-lang3:${commonLang3Version}",
@@ -34,6 +35,7 @@ ext {
                     "org.springframework.boot:spring-boot-starter-web:${springBootVersion}",
                     "org.springframework:spring-context:${springVersion}",
                     "org.springframework:spring-test:${springVersion}"
-            ]
+            ],
+            springDataMongo : "org.springframework.data:spring-data-mongodb:${springDataMongoVersion}"
     ]
 }
