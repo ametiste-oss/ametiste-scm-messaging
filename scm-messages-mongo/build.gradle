@@ -1,0 +1,13 @@
+description = 'SCM Messages Models for MongoDB'
+
+apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray.gradle"
+apply plugin: 'groovy'
+
+dependencies {
+    compile project(':scm-messages')
+
+    compile libraries.commonLang3,
+            libraries.springDataMongo
+
+    testCompile libraries.spock
+}
