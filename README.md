@@ -1,6 +1,11 @@
 SCM Messaging Library
 ====================
 
+## Build Status
+[![Build Status](https://travis-ci.org/ametiste-oss/ametiste-scm-messaging.svg?branch=master)](https://travis-ci.org/ametiste-oss/ametiste-scm-messaging)
+
+##Overview
+
 Messaging Library is a common part of **System's Configuration Management** system.
 Library contains all needed components for organizing messaging between system modules: event and message models,
 sender and receiver components.
