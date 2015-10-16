@@ -22,6 +22,7 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
+    apply plugin: 'jacoco'
     apply from: '../dependencies.gradle'
 
     apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray-ext-ame-oss.gradle"
@@ -81,6 +82,15 @@ subprojects {
             println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
         }
     }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+    }
+
+    check.dependsOn jacocoTestReport
 }
 
 apply plugin: 'groovy'
