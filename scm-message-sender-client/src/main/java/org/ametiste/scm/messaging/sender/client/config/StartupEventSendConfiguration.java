@@ -1,11 +1,11 @@
-package org.ametiste.scm.messaging.sender.client.client.config;
+package org.ametiste.scm.messaging.sender.client.config;
 
 import org.ametiste.scm.messaging.sender.EventSender;
 import org.ametiste.scm.messaging.sender.HttpEventSender;
-import org.ametiste.scm.messaging.sender.client.client.EventSenderBootstrap;
-import org.ametiste.scm.messaging.sender.client.client.environment.AppPropertiesAggregator;
-import org.ametiste.scm.messaging.sender.client.client.event.EventFactory;
-import org.ametiste.scm.messaging.sender.client.client.event.StartupEventFactory;
+import org.ametiste.scm.messaging.sender.client.EventSenderBootstrap;
+import org.ametiste.scm.messaging.sender.client.environment.AppPropertiesAggregator;
+import org.ametiste.scm.messaging.sender.client.event.EventFactory;
+import org.ametiste.scm.messaging.sender.client.event.StartupEventFactory;
 import org.apache.http.client.HttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

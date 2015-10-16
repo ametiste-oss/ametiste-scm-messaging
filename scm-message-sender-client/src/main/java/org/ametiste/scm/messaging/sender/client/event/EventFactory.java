@@ -1,4 +1,4 @@
-package org.ametiste.scm.messaging.sender.client.client.event;
+package org.ametiste.scm.messaging.sender.client.event;
 
 import org.ametiste.scm.messaging.data.event.Event;
 

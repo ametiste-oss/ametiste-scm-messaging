@@ -1,4 +1,4 @@
-package org.ametiste.scm.messaging.sender.client.client.environment;
+package org.ametiste.scm.messaging.sender.client.environment;
 
 import org.springframework.util.Assert;
 

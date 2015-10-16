@@ -1,4 +1,4 @@
-package org.ametiste.scm.messaging.sender.client.client.config;
+package org.ametiste.scm.messaging.sender.client.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

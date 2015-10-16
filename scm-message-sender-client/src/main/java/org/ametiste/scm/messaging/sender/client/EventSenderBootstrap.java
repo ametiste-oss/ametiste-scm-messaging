@@ -1,9 +1,9 @@
-package org.ametiste.scm.messaging.sender.client.client;
+package org.ametiste.scm.messaging.sender.client;
 
 import org.ametiste.scm.messaging.data.transport.TransportMessage;
 import org.ametiste.scm.messaging.sender.EventSendException;
 import org.ametiste.scm.messaging.sender.EventSender;
-import org.ametiste.scm.messaging.sender.client.client.event.EventFactory;
+import org.ametiste.scm.messaging.sender.client.event.EventFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;

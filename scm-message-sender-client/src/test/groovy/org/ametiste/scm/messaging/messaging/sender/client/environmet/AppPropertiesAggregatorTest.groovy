@@ -1,8 +1,8 @@
 package org.ametiste.scm.messaging.messaging.sender.client.environmet
 
 import org.ametiste.scm.messaging.messaging.config.AppPropertiesAggregatorTestConfiguration
-import org.ametiste.scm.messaging.sender.client.client.environment.AppPropertiesAggregator
-import org.ametiste.scm.messaging.sender.client.client.environment.Sanitizer
+import org.ametiste.scm.messaging.sender.client.environment.AppPropertiesAggregator
+import org.ametiste.scm.messaging.sender.client.environment.Sanitizer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.core.env.Environment
