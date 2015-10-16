@@ -2,7 +2,7 @@ SCM Messaging Library
 ====================
 
 ## Build Status
-[![Build Status](https://travis-ci.org/ametiste-oss/ametiste-scm-messaging.svg?branch=master)](https://travis-ci.org/ametiste-oss/ametiste-scm-messaging)
+[![Build Status](https://travis-ci.org/ametiste-oss/ametiste-scm-messaging.svg?branch=master)](https://travis-ci.org/ametiste-oss/ametiste-scm-messaging) [![codecov.io](https://codecov.io/github/ametiste-oss/ametiste-scm-messaging/coverage.svg?branch=master)](https://codecov.io/github/ametiste-oss/ametiste-scm-messaging?branch=master)
 
 ##Overview
 
