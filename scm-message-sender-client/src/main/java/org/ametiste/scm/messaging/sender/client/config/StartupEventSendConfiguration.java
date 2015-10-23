@@ -36,7 +36,7 @@ public class StartupEventSendConfiguration {
     private BootstrapProperties bootstrapProps;
 
     @Autowired
-    Environment env;
+    private Environment env;
 
     @Bean
     public HttpClient eventSenderHttpClient() {
