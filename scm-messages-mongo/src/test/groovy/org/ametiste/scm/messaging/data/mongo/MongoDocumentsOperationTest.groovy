@@ -10,6 +10,8 @@ import spock.lang.Specification
 
 import java.util.function.Function
 
+import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type.STARTUP
+
 /**
  * Test all together: documents creation and mapping with default map from
  * {@code DefaultEventToDocumentConverterMapFactory}.
@@ -19,6 +21,7 @@ class MongoDocumentsOperationTest extends Specification {
     private EventToDocumentConverterMapFactory mapFactory = new DefaultEventToDocumentConverterMapFactory();
 
     private Event event = InstanceLifecycleEvent.builder()
+            .type(STARTUP)
             .id(UUID.fromString("c23e289c-5543-4c7c-8d99-7a30eeb153ae"))
             .timestamp(new Date().getTime())
             .instanceId("ROLL")
@@ -37,7 +40,8 @@ class MongoDocumentsOperationTest extends Specification {
     }
 
     private static boolean compare(test, source) {
-        return  test.getId().equals(source.getId()) &&
+        return  test.getType().equals(source.getType()) &&
+                test.getId().equals(source.getId()) &&
                 test.getTimestamp() == source.getTimestamp() &&
                 test.getInstanceId().equals(source.getInstanceId()) &&
                 test.getVersion().equals(source.getVersion()) &&

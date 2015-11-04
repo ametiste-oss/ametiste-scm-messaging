@@ -3,9 +3,12 @@ package org.ametiste.scm.messaging.data.mongo.event
 import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent
 import spock.lang.Specification
 
-class InstanceStartupEventDocumentTest extends Specification {
+import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type.STARTUP
+
+class InstanceLifecycleEventDocumentTest extends Specification {
 
     private InstanceLifecycleEvent event = InstanceLifecycleEvent.builder()
+            .type(STARTUP)
             .id(UUID.fromString("c23e289c-5543-4c7c-8d99-7a30eeb153ae"))
             .timestamp(new Date().getTime())
             .instanceId("ROLL")
@@ -14,7 +17,7 @@ class InstanceStartupEventDocumentTest extends Specification {
 
     def "should correct convert both ways"() {
         when: "create document from event"
-        InstanceStartupEventDocument document = new InstanceStartupEventDocument(event)
+        InstanceLifecycleEventDocument document = new InstanceLifecycleEventDocument(event)
 
         then: "get document with same info"
         compare(document, event)
