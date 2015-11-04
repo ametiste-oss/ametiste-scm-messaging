@@ -1,7 +1,7 @@
 package org.ametiste.scm.messaging.transport.http.dto;
 
 import org.ametiste.scm.messaging.data.event.Event;
-import org.ametiste.scm.messaging.data.event.InstanceStartupEvent;
+import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.net.URI;
@@ -15,16 +15,18 @@ import static org.apache.commons.lang3.Validate.validState;
 /**
  * DTO for {@code InstanceStartupEvent} class.
  */
-public class InstanceStartupEventDTO extends EventDTO {
+public class InstanceLifecycleEventDTO extends EventDTO {
 
+    private final InstanceLifecycleEvent.Type type;
     private final String instanceId;
     private final String version;
     private final Map<String, Object> properties;
     private final String nodeId;
     private final URI uri;
 
-    private InstanceStartupEventDTO(Builder builder) {
+    private InstanceLifecycleEventDTO(Builder builder) {
         super(builder.id, builder.timestamp);
+        this.type = builder.type;
         this.instanceId = builder.instanceId;
         this.version = builder.version;
         this.properties = Collections.unmodifiableMap(builder.properties);
@@ -35,8 +37,9 @@ public class InstanceStartupEventDTO extends EventDTO {
     /**
      * Default constructor that creates empty event. Adding for Jackson Processor works.
      */
-    public InstanceStartupEventDTO() {
+    public InstanceLifecycleEventDTO() {
         super();
+        type = null;
         instanceId = null;
         version = null;
         properties = Collections.emptyMap();
@@ -47,13 +50,18 @@ public class InstanceStartupEventDTO extends EventDTO {
     /**
      * Create DTO from {@code InstanceStartupEvent} object.
      */
-    public InstanceStartupEventDTO(InstanceStartupEvent event) {
+    public InstanceLifecycleEventDTO(InstanceLifecycleEvent event) {
         super(event);
+        this.type = event.getType();
         this.instanceId = event.getInstanceId();
         this.version = event.getVersion();
         this.properties = event.getProperties();
         this.nodeId = event.getNodeId();
         this.uri = event.getUri();
+    }
+
+    public InstanceLifecycleEvent.Type getType() {
+        return type;
     }
 
     public String getInstanceId() {
@@ -78,11 +86,12 @@ public class InstanceStartupEventDTO extends EventDTO {
 
     /**
      * Builder for constructing {@code InstanceStartupEventDTO} objects.
-     * Used by Jackson Processor for deserializing DTO.
+     * Used by Jackson Processor to deserialize DTO.
      */
     @JsonPOJOBuilder(withPrefix = "add")
     public static class Builder {
 
+        private InstanceLifecycleEvent.Type type;
         private UUID id;
         private long timestamp;
         private String instanceId;
@@ -90,6 +99,11 @@ public class InstanceStartupEventDTO extends EventDTO {
         private Map<String, Object> properties = new HashMap<>();
         private String nodeId;
         private URI uri;
+
+        public Builder addType(InstanceLifecycleEvent.Type type) {
+            this.type = type;
+            return this;
+        }
 
         public Builder addId(UUID id) {
             this.id = id;
@@ -126,27 +140,29 @@ public class InstanceStartupEventDTO extends EventDTO {
             return this;
         }
 
-        public InstanceStartupEventDTO build() {
+        public InstanceLifecycleEventDTO build() {
+            validState(type != null, "'type' must be initialized before DTO creation");
             validState(id != null, "'id' must be initialized before DTO creation");
             validState(timestamp > 0, "'timestamp' must be initialized before DTO creation");
             validState(instanceId != null, "'instanceId' must be initialized before DTO creation");
             validState(version != null, "'version' must be initialized before DTO creation");
             validState(!version.isEmpty(), "'version' must be not empty string");
 
-            return new InstanceStartupEventDTO(this);
+            return new InstanceLifecycleEventDTO(this);
         }
     }
 
     @Override
     public Event convert() {
-        return InstanceStartupEvent.builder()
-                .addId(super.getId())
-                .addTimestamp(super.getTimestamp())
-                .addInstanceId(instanceId)
-                .addVersion(version)
-                .addProperties(properties)
-                .addNodeId(nodeId)
-                .addUri(uri)
+        return InstanceLifecycleEvent.builder()
+                .type(type)
+                .id(super.getId())
+                .timestamp(super.getTimestamp())
+                .instanceId(instanceId)
+                .version(version)
+                .properties(properties)
+                .nodeId(nodeId)
+                .uri(uri)
                 .build();
     }
 }

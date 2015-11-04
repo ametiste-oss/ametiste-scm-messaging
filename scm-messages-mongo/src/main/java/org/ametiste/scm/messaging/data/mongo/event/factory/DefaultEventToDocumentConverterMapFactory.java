@@ -1,7 +1,6 @@
 package org.ametiste.scm.messaging.data.mongo.event.factory;
 
 import org.ametiste.scm.messaging.data.event.Event;
-import org.ametiste.scm.messaging.data.event.InstanceStartupEvent;
 import org.ametiste.scm.messaging.data.mongo.event.EventDocument;
 import org.ametiste.scm.messaging.data.mongo.event.InstanceStartupEventDocument;
 

@@ -1,6 +1,6 @@
 package org.ametiste.scm.messaging.transport.http.dto.factory;
 
-import org.ametiste.scm.messaging.data.event.InstanceStartupEvent;
+import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ public class DefaultEventToConverterMapFactory implements EventToConverterMapFac
     @Override
     public Map<Class, EventDTOFactory> getMap() {
         Map<Class, EventDTOFactory> map = new HashMap<>(1);
-        map.put(InstanceStartupEvent.class, new InstanceStartupEventDTOFactory());
+        map.put(InstanceLifecycleEvent.class, new InstanceStartupEventDTOFactory());
 
         return Collections.unmodifiableMap(map);
     }

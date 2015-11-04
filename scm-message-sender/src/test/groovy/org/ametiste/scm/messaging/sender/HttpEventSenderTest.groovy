@@ -1,7 +1,7 @@
 package org.ametiste.scm.messaging.sender
 
 import org.ametiste.scm.messaging.data.event.Event
-import org.ametiste.scm.messaging.data.event.InstanceStartupEvent
+import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent
 import org.ametiste.scm.messaging.data.transport.TransportMessage
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -13,6 +13,9 @@ import org.apache.http.impl.client.CloseableHttpClient
 import spock.lang.Specification
 
 import java.util.stream.Collectors
+
+import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type.SHUTDOWN
+import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type.STARTUP
 
 class HttpEventSenderTest extends Specification {
 
@@ -27,8 +30,8 @@ class HttpEventSenderTest extends Specification {
 
         target = new URI("http://localhost:9200/event-receiver");
         events = new ArrayList<>();
-        events.add(InstanceStartupEvent.builder().addInstanceId("DSF").addVersion("0.2.6").build());
-        events.add(InstanceStartupEvent.builder().addInstanceId("DIE").addVersion("1.0.5").build());
+        events.add(InstanceLifecycleEvent.builder().type(STARTUP).instanceId("DSF").version("0.2.6").build());
+        events.add(InstanceLifecycleEvent.builder().type(SHUTDOWN).instanceId("DIE").version("1.0.5").build());
     }
 
     def "sender should send correct event request"() {

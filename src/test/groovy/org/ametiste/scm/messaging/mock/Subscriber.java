@@ -1,7 +1,7 @@
 package org.ametiste.scm.messaging.mock;
 
 import org.ametiste.scm.messaging.data.event.Event;
-import org.ametiste.scm.messaging.data.event.InstanceStartupEvent;
+import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent;
 import org.ametiste.scm.messaging.data.transport.EventTransportMessage;
 import org.ametiste.scm.messaging.data.transport.TransportMessage;
 import org.springframework.context.event.EventListener;
@@ -40,7 +40,7 @@ public class Subscriber {
     }
 
     @EventListener
-    public void onInstanceStartupEvent(InstanceStartupEvent event) {
+    public void onInstanceStartupEvent(InstanceLifecycleEvent event) {
         messages.get(ListenerType.INSTANCE_STARTUP_EVENT).add(event);
     }
 

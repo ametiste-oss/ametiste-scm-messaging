@@ -1,7 +1,6 @@
 package org.ametiste.scm.messaging.data.mongo.event;
 
 import org.ametiste.scm.messaging.data.event.Event;
-import org.ametiste.scm.messaging.data.event.InstanceStartupEvent;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.net.URI;

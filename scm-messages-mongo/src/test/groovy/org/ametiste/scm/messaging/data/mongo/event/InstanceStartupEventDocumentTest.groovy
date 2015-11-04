@@ -1,15 +1,15 @@
 package org.ametiste.scm.messaging.data.mongo.event
 
-import org.ametiste.scm.messaging.data.event.InstanceStartupEvent
+import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent
 import spock.lang.Specification
 
 class InstanceStartupEventDocumentTest extends Specification {
 
-    private InstanceStartupEvent event = InstanceStartupEvent.builder()
-            .addId(UUID.fromString("c23e289c-5543-4c7c-8d99-7a30eeb153ae"))
-            .addTimestamp(new Date().getTime())
-            .addInstanceId("ROLL")
-            .addVersion("0.2.6")
+    private InstanceLifecycleEvent event = InstanceLifecycleEvent.builder()
+            .id(UUID.fromString("c23e289c-5543-4c7c-8d99-7a30eeb153ae"))
+            .timestamp(new Date().getTime())
+            .instanceId("ROLL")
+            .version("0.2.6")
             .build();
 
     def "should correct convert both ways"() {
@@ -20,7 +20,7 @@ class InstanceStartupEventDocumentTest extends Specification {
         compare(document, event)
 
         when: "convert document to event"
-        InstanceStartupEvent newEvent = document.convert()
+        InstanceLifecycleEvent newEvent = document.convert()
 
         then: "converted event must be as source"
         compare(newEvent, event)

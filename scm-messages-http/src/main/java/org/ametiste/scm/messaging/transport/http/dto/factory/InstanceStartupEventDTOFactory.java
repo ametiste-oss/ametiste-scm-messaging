@@ -1,16 +1,16 @@
 package org.ametiste.scm.messaging.transport.http.dto.factory;
 
 import org.ametiste.scm.messaging.data.event.Event;
-import org.ametiste.scm.messaging.data.event.InstanceStartupEvent;
+import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent;
 import org.ametiste.scm.messaging.transport.http.dto.EventDTO;
-import org.ametiste.scm.messaging.transport.http.dto.InstanceStartupEventDTO;
+import org.ametiste.scm.messaging.transport.http.dto.InstanceLifecycleEventDTO;
 
 /**
  * {@code EventDTOFactory} for {@code InstanceStartupEvent} event type.
  */
 public class InstanceStartupEventDTOFactory implements EventDTOFactory {
 
-    private static final Class TARGET_EVENT_CLASS = InstanceStartupEvent.class;
+    private static final Class TARGET_EVENT_CLASS = InstanceLifecycleEvent.class;
 
     @Override
     public EventDTO createDTO(Event event) throws IllegalArgumentException {
@@ -18,6 +18,6 @@ public class InstanceStartupEventDTOFactory implements EventDTOFactory {
             throw new IllegalArgumentException("Can't create DTO. Unexpected event type.");
         }
 
-        return new InstanceStartupEventDTO((InstanceStartupEvent)event);
+        return new InstanceLifecycleEventDTO((InstanceLifecycleEvent)event);
     }
 }
