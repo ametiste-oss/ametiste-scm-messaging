@@ -5,5 +5,6 @@ include 'scm-messages-http'
 include 'scm-message-receiver'
 include 'scm-message-sender'
 include 'scm-message-sender-client'
+include 'scm-message-sender-client-starter'
 include 'scm-messages-mongo'
 
