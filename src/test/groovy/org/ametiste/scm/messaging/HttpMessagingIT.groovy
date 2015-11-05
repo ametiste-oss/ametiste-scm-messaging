@@ -95,7 +95,7 @@ class HttpMessagingIT extends Specification {
     }
 
     private static InstanceLifecycleEvent createInstanceStartupEvent() {
-        Type type  = Type.SHUTDOWN;
+        Type type  = Type.STARTUP;
         String instanceId = "DEBS";
         String version = "0.1.5-RELEASE";
         String nodeId = "AWS1.RAIN";

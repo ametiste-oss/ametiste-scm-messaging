@@ -13,7 +13,7 @@ import java.util.UUID;
 import static org.apache.commons.lang3.Validate.validState;
 
 /**
- * DTO for {@code InstanceStartupEvent} class.
+ * DTO for {@code InstanceLifecycleEvent} class.
  */
 public class InstanceLifecycleEventDTO extends EventDTO {
 
