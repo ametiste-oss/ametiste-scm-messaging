@@ -1,5 +1,7 @@
 # SCM Messaging Library
 
+Link to umbrella project: [>> System's Configuration Management <<](https://github.com/ametiste-oss/ametiste-scm)
+
 ## Build Status
 [![Build Status](https://travis-ci.org/ametiste-oss/ametiste-scm-messaging.svg?branch=master)](https://travis-ci.org/ametiste-oss/ametiste-scm-messaging)
 [![Codacy Badge](https://api.codacy.com/project/badge/7ad6ce9909944604a65fa57e4d48d2a7)](https://www.codacy.com/app/bliznyuk-andrey/ametiste-scm-messaging)
