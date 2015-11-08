@@ -29,6 +29,12 @@ class InstanceLifecycleEventTest extends Specification {
         then: "expect exception thrown"
         thrown IllegalStateException
 
+        when: "add empty version and try build"
+        builder.version("").build();
+
+        then: "expect exception thrown"
+        thrown IllegalStateException
+
         when: "add version field too and try build"
         builder.version("0.2.1-RELEASE")
 
