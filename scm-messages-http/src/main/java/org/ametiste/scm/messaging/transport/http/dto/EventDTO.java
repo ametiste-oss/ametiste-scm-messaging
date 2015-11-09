@@ -4,6 +4,7 @@ import org.ametiste.scm.messaging.data.event.Event;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -15,7 +16,9 @@ import java.util.UUID;
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 @JsonSubTypes(@JsonSubTypes.Type(value = InstanceLifecycleEventDTO.class, name = "InstanceLifecycleEventDTO"))
-public abstract class EventDTO {
+public abstract class EventDTO implements Serializable {
+
+    private static final long serialVersionUID = 19L;
 
     private final UUID id;
     private final long timestamp;
