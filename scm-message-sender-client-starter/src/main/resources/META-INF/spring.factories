@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-	org.ametiste.scm.messaging.sender.client.config.StartupEventSendConfiguration
+	org.ametiste.scm.messaging.sender.client.config.LifecycleEventSendConfiguration
