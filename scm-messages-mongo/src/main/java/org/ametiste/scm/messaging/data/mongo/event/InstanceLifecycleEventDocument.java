@@ -8,6 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.net.URI;
 import java.util.Map;
 
+/**
+ * Document model for {@code InstanceLifecycleEvent} subtype.
+ */
 @Document
 public class InstanceLifecycleEventDocument extends EventDocument {
 

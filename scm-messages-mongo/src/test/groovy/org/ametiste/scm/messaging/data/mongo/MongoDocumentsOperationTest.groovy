@@ -2,7 +2,6 @@ package org.ametiste.scm.messaging.data.mongo
 
 import org.ametiste.scm.messaging.data.event.Event
 import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent
-import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent
 import org.ametiste.scm.messaging.data.mongo.event.EventDocument
 import org.ametiste.scm.messaging.data.mongo.event.factory.DefaultEventToDocumentConverterMapFactory
 import org.ametiste.scm.messaging.data.mongo.event.factory.EventToDocumentConverterMapFactory

@@ -7,7 +7,7 @@ import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type.
 
 class InstanceLifecycleEventDocumentTest extends Specification {
 
-    private InstanceLifecycleEvent event = InstanceLifecycleEvent.builder()
+    private final InstanceLifecycleEvent event = InstanceLifecycleEvent.builder()
             .type(STARTUP)
             .id(UUID.fromString("c23e289c-5543-4c7c-8d99-7a30eeb153ae"))
             .timestamp(new Date().getTime())
@@ -27,6 +27,22 @@ class InstanceLifecycleEventDocumentTest extends Specification {
 
         then: "converted event must be as source"
         compare(newEvent, event)
+    }
+
+    def "create correct document with default constructor and setters"() {
+        given: "document constructed with default constructor and setters"
+        InstanceLifecycleEventDocument document = new InstanceLifecycleEventDocument();
+        document.setType(event.getType())
+        document.setId(event.getId())
+        document.setTimestamp(event.getTimestamp())
+        document.setInstanceId(event.getInstanceId())
+        document.setVersion(event.getVersion())
+        document.setProperties(event.getProperties())
+        document.setNodeId(event.getNodeId())
+        document.setUri(event.getUri())
+
+        expect: "take document with same information as event contains"
+        compare(document, event)
     }
 
     private static boolean compare(test, source) {

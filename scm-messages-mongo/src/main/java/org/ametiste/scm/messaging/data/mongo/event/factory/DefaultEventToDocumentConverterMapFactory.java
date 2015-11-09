@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * Default implementation of {@code EventToDocumentConverterMapFactory} that contains converters for all known event
+ * subtypes.
+ */
 public class DefaultEventToDocumentConverterMapFactory implements EventToDocumentConverterMapFactory {
 
     @Override
