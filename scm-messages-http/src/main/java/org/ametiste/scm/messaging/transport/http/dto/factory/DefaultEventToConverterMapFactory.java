@@ -14,7 +14,7 @@ public class DefaultEventToConverterMapFactory implements EventToConverterMapFac
     @Override
     public Map<Class, EventDTOFactory> getMap() {
         Map<Class, EventDTOFactory> map = new HashMap<>(1);
-        map.put(InstanceLifecycleEvent.class, new InstanceStartupEventDTOFactory());
+        map.put(InstanceLifecycleEvent.class, new InstanceLifecycleEventDTOFactory());
 
         return Collections.unmodifiableMap(map);
     }

@@ -28,7 +28,7 @@ public class EventDTOMessage extends TransportMessage<EventDTO> {
      * @param source {@code EventDTO} subclass instance.
      */
     public EventDTOMessage(EventDTO source) {
-        super(source, Collections.emptyList());
+        super(source);
     }
 
     /**

@@ -9,7 +9,7 @@ import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type.
 
 class InstanceLifecycleEventDTOFactoryTest extends Specification {
 
-    private InstanceStartupEventDTOFactory factory = new InstanceStartupEventDTOFactory();
+    private InstanceLifecycleEventDTOFactory factory = new InstanceLifecycleEventDTOFactory();
 
     private InstanceLifecycleEvent event = InstanceLifecycleEvent.builder().type(STARTUP)
             .instanceId("ROLL")
@@ -32,5 +32,5 @@ class InstanceLifecycleEventDTOFactoryTest extends Specification {
         thrown IllegalArgumentException
     }
 
-    private class TestEvent extends Event {}
+    private static class TestEvent extends Event {}
 }
