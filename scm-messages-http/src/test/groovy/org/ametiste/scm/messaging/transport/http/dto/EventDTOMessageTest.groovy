@@ -1,16 +1,20 @@
 package org.ametiste.scm.messaging.transport.http.dto
 
+import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent
 import spock.lang.Specification
 
 import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type.STARTUP
 
 class EventDTOMessageTest extends Specification {
 
-    private final InstanceLifecycleEventDTO dto = new InstanceLifecycleEventDTO.Builder()
-            .type(STARTUP)
-            .instanceId("foo")
-            .version("0.2.5")
-            .build();
+    private final InstanceLifecycleEventDTO dto = new InstanceLifecycleEventDTO(
+            InstanceLifecycleEvent.builder()
+                .type(STARTUP)
+                .instanceId("foo")
+                .version("0.2.5")
+                .build()
+    );
+
     private final List<URI> excludes = [new URI("http://localhost"), new URI("http://foo.com")]
 
     def "create default dto message"() {
