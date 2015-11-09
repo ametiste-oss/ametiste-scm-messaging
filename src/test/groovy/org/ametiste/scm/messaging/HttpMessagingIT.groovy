@@ -2,7 +2,7 @@ package org.ametiste.scm.messaging
 
 import org.ametiste.scm.messaging.config.HttpMessagingContext
 import org.ametiste.scm.messaging.data.event.Event
-import org.ametiste.scm.messaging.data.event.InstanceStartupEvent
+import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent
 import org.ametiste.scm.messaging.data.transport.TransportMessage
 import org.ametiste.scm.messaging.mock.Subscriber
 import org.ametiste.scm.messaging.sender.EventSender
@@ -13,6 +13,7 @@ import org.springframework.boot.test.WebIntegrationTest
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
+import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.*
 import static org.ametiste.scm.messaging.mock.Subscriber.ListenerType.*
 import static org.junit.Assert.assertEquals
 
@@ -37,7 +38,7 @@ class HttpMessagingIT extends Specification {
 
     def "service instance send event with configuration info to broker"() {
         given: "event with information about service instance"
-        InstanceStartupEvent event = createInstanceStartupEvent();
+        InstanceLifecycleEvent event = createInstanceStartupEvent();
 
         when: "pack event to message and send to broker"
         TransportMessage<Event> message = new TransportMessage<>(event);
@@ -52,7 +53,7 @@ class HttpMessagingIT extends Specification {
         assert subscriber.events(INSTANCE_STARTUP_EVENT).size() == 1
 
         and: "received event should be same as original"
-        checkEvents(event, (InstanceStartupEvent)subscriber.events(EVENT).get(0))
+        checkEvents(event, (InstanceLifecycleEvent)subscriber.events(EVENT).get(0))
 
         cleanup:
         subscriber.clean()
@@ -60,7 +61,7 @@ class HttpMessagingIT extends Specification {
 
     def "event broker send few events in one message to subscriber"() {
         given: "event with information about service instance"
-        InstanceStartupEvent event = createInstanceStartupEvent();
+        InstanceLifecycleEvent event = createInstanceStartupEvent();
 
         when: "pack events to messages and send to broker"
         TransportMessage<Event> message = new TransportMessage<>(event);
@@ -80,7 +81,7 @@ class HttpMessagingIT extends Specification {
 
     def "sender exclude target from event broadcast"() {
         given: "event with information about service instance"
-        InstanceStartupEvent event = createInstanceStartupEvent();
+        InstanceLifecycleEvent event = createInstanceStartupEvent();
 
         when: "pack event to message with target exclude and send to broker"
         TransportMessage<Event> message = new TransportMessage<>(event, Collections.singleton(receiverEndpointURI));
@@ -93,7 +94,8 @@ class HttpMessagingIT extends Specification {
         subscriber.clean()
     }
 
-    private static InstanceStartupEvent createInstanceStartupEvent() {
+    private static InstanceLifecycleEvent createInstanceStartupEvent() {
+        Type type  = Type.STARTUP;
         String instanceId = "DEBS";
         String version = "0.1.5-RELEASE";
         String nodeId = "AWS1.RAIN";
@@ -103,16 +105,17 @@ class HttpMessagingIT extends Specification {
         properties.put("dbUrl", new URI("http://localhost:9300/schema"));
         properties.put("retry", 15);
 
-        return InstanceStartupEvent.builder()
-                .addInstanceId(instanceId)
-                .addVersion(version)
-                .addProperties(properties)
-                .addNodeId(nodeId)
-                .addUri(uri)
+        return builder()
+                .type(type)
+                .instanceId(instanceId)
+                .version(version)
+                .properties(properties)
+                .nodeId(nodeId)
+                .uri(uri)
                 .build();
     }
 
-    private static void checkEvents(InstanceStartupEvent expect, InstanceStartupEvent received) {
+    private static void checkEvents(InstanceLifecycleEvent expect, InstanceLifecycleEvent received) {
         assertEquals(expect.getId(), received.getId())
         assertEquals(expect.getTimestamp(), expect.getTimestamp())
         assertEquals(expect.getInstanceId(), received.getInstanceId())

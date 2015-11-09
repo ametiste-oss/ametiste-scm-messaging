@@ -1,15 +1,17 @@
 package org.ametiste.scm.messaging.data.mongo.event;
 
 import org.ametiste.scm.messaging.data.event.Event;
-import org.ametiste.scm.messaging.data.event.InstanceStartupEvent;
+import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent;
+import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.net.URI;
 import java.util.Map;
 
 @Document
-public class InstanceStartupEventDocument extends EventDocument {
+public class InstanceLifecycleEventDocument extends EventDocument {
 
+    private Type type;
     private String instanceId;
     private String version;
     private Map<String, Object> properties;
@@ -19,20 +21,29 @@ public class InstanceStartupEventDocument extends EventDocument {
     /**
      * Empty constructor to save ability instantiate {@code InstanceStartupEventDocument} by {@code MongoConverter}.
      */
-    public InstanceStartupEventDocument() {
+    public InstanceLifecycleEventDocument() {
     }
 
     /**
      * Create {@code InstanceStartupEventDocument} from {@code InstanceStartupEvent} object.
      * @param event target {@code InstanceStartupEvent} object.
      */
-    public InstanceStartupEventDocument(InstanceStartupEvent event) {
+    public InstanceLifecycleEventDocument(InstanceLifecycleEvent event) {
         super(event);
+        this.type = event.getType();
         this.instanceId = event.getInstanceId();
         this.version = event.getVersion();
         this.properties = event.getProperties();
         this.nodeId = event.getNodeId();
         this.uri = event.getUri();
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public String getInstanceId() {
@@ -77,14 +88,15 @@ public class InstanceStartupEventDocument extends EventDocument {
 
     @Override
     public Event convert() {
-        return InstanceStartupEvent.builder()
-                .addId(super.getId())
-                .addTimestamp(super.getTimestamp())
-                .addInstanceId(instanceId)
-                .addVersion(version)
-                .addProperties(properties)
-                .addNodeId(nodeId)
-                .addUri(uri)
+        return InstanceLifecycleEvent.builder()
+                .type(type)
+                .id(super.getId())
+                .timestamp(super.getTimestamp())
+                .instanceId(instanceId)
+                .version(version)
+                .properties(properties)
+                .nodeId(nodeId)
+                .uri(uri)
                 .build();
     }
 }

@@ -1,17 +1,19 @@
 package org.ametiste.scm.messaging.transport.http.dto.factory
 
 import org.ametiste.scm.messaging.data.event.Event
-import org.ametiste.scm.messaging.data.event.InstanceStartupEvent
+import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent
 import org.ametiste.scm.messaging.transport.http.dto.EventDTO
 import spock.lang.Specification
 
-class InstanceStartupEventDTOFactoryTest extends Specification {
+import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type.*
+
+class InstanceLifecycleEventDTOFactoryTest extends Specification {
 
     private InstanceStartupEventDTOFactory factory = new InstanceStartupEventDTOFactory();
 
-    private InstanceStartupEvent event = InstanceStartupEvent.builder()
-            .addInstanceId("ROLL")
-            .addVersion("0.2.6")
+    private InstanceLifecycleEvent event = InstanceLifecycleEvent.builder().type(STARTUP)
+            .instanceId("ROLL")
+            .version("0.2.6")
             .build();
 
     def "factory must create DTO from event"() {

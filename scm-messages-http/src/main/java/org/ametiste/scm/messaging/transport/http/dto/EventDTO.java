@@ -14,7 +14,7 @@ import java.util.UUID;
  * Additional operations and subtypes names defined by Jackson annotations.
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
-@JsonSubTypes(@JsonSubTypes.Type(value = InstanceStartupEventDTO.class, name = "InstanceStartupEventDTO"))
+@JsonSubTypes(@JsonSubTypes.Type(value = InstanceLifecycleEventDTO.class, name = "InstanceLifecycleEventDTO"))
 public abstract class EventDTO {
 
     private final UUID id;

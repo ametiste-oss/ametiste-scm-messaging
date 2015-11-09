@@ -1,25 +1,29 @@
 package org.ametiste.scm.messaging.transport.http.dto
 
-import org.ametiste.scm.messaging.data.event.InstanceStartupEvent
+import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent
 import spock.lang.Specification
 
-class InstanceStartupEventDTOTest extends Specification {
+import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type.*
+
+class InstanceLifecycleEventDTOTest extends Specification {
 
     def "DTO should convert to correct event"() {
         given: "original event"
-        InstanceStartupEvent event = InstanceStartupEvent.builder()
-            .addInstanceId("ROLL")
-            .addVersion("0.2.6-1-RELEASE")
-            .addProperty("host", new URI("http://192.168.1.2:8080"))
-            .addProperty("retries", 15)
-            .addNodeId("enet")
+        InstanceLifecycleEvent event = InstanceLifecycleEvent.builder()
+            .type(STARTUP)
+            .instanceId("ROLL")
+            .version("0.2.6-1-RELEASE")
+            .property("host", new URI("http://192.168.1.2:8080"))
+            .property("retries", 15)
+            .nodeId("enet")
             .build();
 
         and: "create DTO from original event"
-        InstanceStartupEventDTO dto = new InstanceStartupEventDTO(event);
+        InstanceLifecycleEventDTO dto = new InstanceLifecycleEventDTO(event);
 
         expect: "DTO converts to event equals to original event"
-        InstanceStartupEvent convertedEvent = (InstanceStartupEvent)dto.convert();
+        InstanceLifecycleEvent convertedEvent = (InstanceLifecycleEvent)dto.convert();
+        convertedEvent.getType().equals(event.getType());
         convertedEvent.getId().equals(event.getId());
         convertedEvent.getTimestamp() == event.getTimestamp();
         convertedEvent.getInstanceId().equals(event.getInstanceId());
