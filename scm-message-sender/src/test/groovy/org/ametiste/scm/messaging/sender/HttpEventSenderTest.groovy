@@ -116,11 +116,13 @@ class HttpEventSenderTest extends Specification {
     }
 
     def "sender exception on client error"() {
-        when: "send messages and client throw exception"
+        when: "send messages"
         sender.send(target, new TransportMessage<Event>(events[0]))
-        client.execute(_, _) >> { throw new IOException(); }
 
-        then: "expect exception intercepted and EventSendException thrown"
+        then: "client throw exception"
+        client.execute(_, _) >> { throw new IOException("error on send"); }
+
+        and: "expect exception intercepted and EventSendException thrown"
         thrown(EventSendException.class)
     }
 
