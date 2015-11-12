@@ -4,6 +4,7 @@ import org.ametiste.scm.messaging.data.event.Event;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -12,7 +13,9 @@ import java.util.UUID;
  * {@code EventDocument} contains same fields as correspond Event class.
  */
 @Document
-public abstract class EventDocument {
+public abstract class EventDocument implements Serializable {
+
+    private static final long serialVersionUID = 19L;
 
     @Id
     private UUID id;

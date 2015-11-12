@@ -1,22 +1,20 @@
 package org.ametiste.scm.messaging.sender.client.event
-
 import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent
 import spock.lang.Specification
 
-import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type.*
+import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type.SHUTDOWN
 
-class StartupEventFactoryTest extends Specification {
+class ShutdownEventFactoryTest extends Specification {
 
     def "should create correct event"() {
-        def type = STARTUP;
+        def type = SHUTDOWN;
         def instanceId = "DWS";
         def version = "0.2.6";
         def nodeId = "aws.node2";
         def uri = URI.create("http://localhost:8085")
-        def properties = Collections.singletonMap("server.port", 8085);
 
         given: "event factory"
-        def factory = new StartupEventFactory(instanceId, version, nodeId, uri, properties);
+        def factory = new ShutdownEventFactory(instanceId, version, nodeId, uri);
 
         when: "factory create event"
         InstanceLifecycleEvent event = (InstanceLifecycleEvent)factory.createEvent();
@@ -27,6 +25,5 @@ class StartupEventFactoryTest extends Specification {
         event.getVersion().equals(version);
         event.getNodeId().equals(nodeId);
         event.getUri() == uri
-        event.properties.size() == properties.size()
     }
 }

@@ -15,6 +15,7 @@ import java.net.URI;
  * {@code isStrict} parameter defines object behavior in exception handling. If {@code isStrict} is true bootstrap
  * falls with exception when during send process any error occurred. If is's false object ignores all error, just log.
  */
+// TODO think about naming after shutdown event appear. Now it's not only bootstrap worker. May be rename to EventSenderClient.
 public class EventSenderBootstrap {
 
     private final Logger logger = LoggerFactory.getLogger(EventSenderBootstrap.class);
@@ -51,8 +52,10 @@ public class EventSenderBootstrap {
             logger.debug("Startup event success sent");
         } catch (EventSendException e) {
             if (isStrict) {
+                // TODO: change to more specific exception type
                 throw new RuntimeException(e.getMessage(), e);
             } else {
+                // TODO: change to debug or warn
                 logger.error(e.getMessage(), e);
             }
         }

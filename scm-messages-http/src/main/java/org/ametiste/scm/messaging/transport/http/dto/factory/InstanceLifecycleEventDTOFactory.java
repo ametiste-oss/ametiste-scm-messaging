@@ -8,7 +8,7 @@ import org.ametiste.scm.messaging.transport.http.dto.InstanceLifecycleEventDTO;
 /**
  * {@code EventDTOFactory} for {@code InstanceStartupEvent} event type.
  */
-public class InstanceStartupEventDTOFactory implements EventDTOFactory {
+public class InstanceLifecycleEventDTOFactory implements EventDTOFactory {
 
     private static final Class TARGET_EVENT_CLASS = InstanceLifecycleEvent.class;
 
