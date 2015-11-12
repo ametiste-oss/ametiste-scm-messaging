@@ -24,6 +24,7 @@ import java.net.URISyntaxException;
  * Configuration for integrate bootstrap event sending process.
  * It can be excluded from context with property {@code org.ametiste.scm.messaging.sender.enabled} set to false.
  */
+// TODO move config to starter module
 @Configuration
 @ConditionalOnProperty(value = "org.ametiste.scm.messaging.sender.enabled", matchIfMissing = true)
 @EnableConfigurationProperties({ HttpClientProperties.class, InstanceInfoProperties.class, BootstrapProperties.class })
