@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-//@EnableAutoConfiguration
 @PropertySource("classpath:test-props-aggregator.properties")
 public class AppPropertiesAggregatorTestConfiguration {
 
