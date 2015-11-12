@@ -51,8 +51,10 @@ public class EventSenderBootstrap {
             logger.debug("Startup event success sent");
         } catch (EventSendException e) {
             if (isStrict) {
+                // TODO: change to more specific exception type
                 throw new RuntimeException(e.getMessage(), e);
             } else {
+                // TODO: change to debug or warn
                 logger.error(e.getMessage(), e);
             }
         }

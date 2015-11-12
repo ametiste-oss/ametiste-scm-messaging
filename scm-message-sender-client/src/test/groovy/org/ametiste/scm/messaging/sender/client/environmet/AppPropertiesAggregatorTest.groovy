@@ -1,6 +1,6 @@
-package org.ametiste.scm.messaging.messaging.sender.client.environmet
+package org.ametiste.scm.messaging.sender.client.environmet
 
-import org.ametiste.scm.messaging.messaging.config.AppPropertiesAggregatorTestConfiguration
+import org.ametiste.scm.messaging.config.AppPropertiesAggregatorTestConfiguration
 import org.ametiste.scm.messaging.sender.client.environment.AppPropertiesAggregator
 import org.ametiste.scm.messaging.sender.client.environment.Sanitizer
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,6 +20,18 @@ class AppPropertiesAggregatorTest extends Specification {
 
     @Autowired
     private AppPropertiesAggregator aggregator;
+
+    def "aggregator should return standard env if passed is null"() {
+        when: "try get properties with null environment"
+        Map<String, Object> properties = aggregator.aggregateProperties(null)
+
+        then: "expect no exception thrown"
+        noExceptionThrown()
+
+        and: "returned value initialized"
+        properties != null
+        !properties.isEmpty()
+    }
 
     def "aggregator should return initialized not empty properties map"() {
         given: "result of environment aggregation"

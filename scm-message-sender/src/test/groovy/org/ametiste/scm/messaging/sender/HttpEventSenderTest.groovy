@@ -1,5 +1,6 @@
 package org.ametiste.scm.messaging.sender
 
+import com.fasterxml.jackson.core.JsonProcessingException
 import org.ametiste.scm.messaging.data.event.Event
 import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent
 import org.ametiste.scm.messaging.data.transport.TransportMessage
@@ -14,6 +15,7 @@ import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.CloseableHttpClient
 import spock.lang.Specification
 
+import java.lang.reflect.Field
 import java.util.stream.Collectors
 
 import static java.util.Collections.singletonList
@@ -127,7 +129,11 @@ class HttpEventSenderTest extends Specification {
     }
 
     def "sender exception on message serialising"() {
+        when: "try serialize incorrect object"
+        sender.execute(target, Collections.singletonMap(null, null))
 
+        then: "expect EventSendException thrown"
+        thrown(EventSendException.class)
     }
 
     def "sender exception on converter missing"() {

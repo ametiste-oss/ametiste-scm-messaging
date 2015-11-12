@@ -23,7 +23,9 @@ public class AppPropertiesAggregator {
      */
     public Map<String, Object> aggregateProperties(Environment environment) {
         Map<String, Object> result = new LinkedHashMap<>();
-        result.put("profiles", environment.getActiveProfiles());
+        if (environment != null) {
+            result.put("profiles", environment.getActiveProfiles());
+        }
 
         getPropertySources(environment).entrySet().stream()
                 .filter(entry -> entry.getValue() instanceof EnumerablePropertySource)
