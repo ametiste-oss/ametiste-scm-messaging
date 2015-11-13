@@ -1,10 +1,8 @@
 package org.ametiste.scm.messaging.sender.client
 
-import org.ametiste.scm.messaging.data.transport.EventTransportMessage
 import org.ametiste.scm.messaging.data.transport.TransportMessage
 import org.ametiste.scm.messaging.sender.EventSendException
 import org.ametiste.scm.messaging.sender.EventSender
-import org.ametiste.scm.messaging.sender.HttpEventSender
 import org.ametiste.scm.messaging.sender.client.event.EventFactory
 import org.ametiste.scm.messaging.sender.client.event.ShutdownEventFactory
 import spock.lang.Specification
