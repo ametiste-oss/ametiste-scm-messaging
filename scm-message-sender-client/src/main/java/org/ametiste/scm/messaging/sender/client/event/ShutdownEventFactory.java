@@ -5,7 +5,6 @@ import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent;
 import org.springframework.util.Assert;
 
 import java.net.URI;
-import java.util.Map;
 
 import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type.SHUTDOWN;
 

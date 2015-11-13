@@ -55,8 +55,9 @@ public class EventSenderBootstrap {
                 // TODO: change to more specific exception type
                 throw new RuntimeException(e.getMessage(), e);
             } else {
-                // TODO: change to debug or warn
-                logger.error(e.getMessage(), e);
+                if (logger.isDebugEnabled()) {
+                    logger.warn(e.getMessage(), e);
+                }
             }
         }
     }
