@@ -36,6 +36,7 @@ ext {
                     "org.springframework:spring-context:${springVersion}",
                     "org.springframework:spring-test:${springVersion}"
             ],
+            springCore      : "org.springframework:spring-core:${springVersion}",
             springDataMongo : "org.springframework.data:spring-data-mongodb:${springDataMongoVersion}"
     ]
 }

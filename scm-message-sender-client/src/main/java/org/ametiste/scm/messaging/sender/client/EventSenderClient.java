@@ -11,14 +11,19 @@ import org.springframework.util.Assert;
 import java.net.URI;
 
 /**
- * {@code EventSenderBootstrap} class provides functionality to send event on service instance startup.
- * {@code isStrict} parameter defines object behavior in exception handling. If {@code isStrict} is true bootstrap
- * falls with exception when during send process any error occurred. If is's false object ignores all error, just log.
+ * {@code EventSenderClient} class provides functionality to send event from service instance. For example, when instance
+ * startup, shutdown or configuration of service refreshed.
+ * <p>
+ * Client takes event from {@code EventFactory} instance that cover all details of event construction. Also client
+ * receive target URI and sender instance on construction and this parameters can't be changed later.
+ * <p>
+ * Client also cover all exceptions during send process. {@code isStrict} parameter defines client behavior in exception
+ * handling. If {@code isStrict} is true client falls with exception when during send process any error occurred.
+ * If it's false client ignores all error, just log (messages allowed on in debug level).
  */
-// TODO think about naming after shutdown event appear. Now it's not only bootstrap worker. May be rename to EventSenderClient.
-public class EventSenderBootstrap {
+public class EventSenderClient {
 
-    private final Logger logger = LoggerFactory.getLogger(EventSenderBootstrap.class);
+    private final Logger logger = LoggerFactory.getLogger(EventSenderClient.class);
 
     private final EventFactory factory;
     private final EventSender sender;
@@ -26,13 +31,13 @@ public class EventSenderBootstrap {
     private final boolean isStrict;
 
     /**
-     * Create ready for use {@code EventSenderBootstrap} obejct.
-     * @param factory {@code EventFactory} that creates startup event.
+     * Create ready for use {@code EventSenderClient} object.
+     * @param factory {@code EventFactory} that creates event.
      * @param sender {@code EventSender} instance.
      * @param target URI for send message.
      * @param isStrict flag that define errors processing policy.
      */
-    public EventSenderBootstrap(EventFactory factory, EventSender sender, URI target, boolean isStrict) {
+    public EventSenderClient(EventFactory factory, EventSender sender, URI target, boolean isStrict) {
         Assert.notNull(factory);
         Assert.notNull(sender);
         Assert.notNull(target);
@@ -45,11 +50,13 @@ public class EventSenderBootstrap {
 
     /**
      * Send event to target service.
+     * <p>
+     * All operations is logged on debug level. If client work in strict mode and exception catch during send it throw
+     * exception in higher level.
      */
     public void send() {
         try {
             sender.send(target, new TransportMessage<>(factory.createEvent()));
-            logger.debug("Startup event success sent");
         } catch (EventSendException e) {
             if (isStrict) {
                 throw e;

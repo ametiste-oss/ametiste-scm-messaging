@@ -7,7 +7,7 @@ import org.ametiste.scm.messaging.sender.client.event.EventFactory
 import org.ametiste.scm.messaging.sender.client.event.ShutdownEventFactory
 import spock.lang.Specification
 
-class EventSenderBootstrapTest extends Specification {
+class EventSenderClientTest extends Specification {
 
     def EventSender senderMock;
     def URI uri;
@@ -20,31 +20,31 @@ class EventSenderBootstrapTest extends Specification {
     }
 
     def "initialization checks"() {
-        when: "try create bootstrap with not initialized factory"
-        new EventSenderBootstrap(null, senderMock, uri, true)
+        when: "try create client with not initialized factory"
+        new EventSenderClient(null, senderMock, uri, true)
 
         then: "expect IllegalArgumentException thrown"
         thrown(IllegalArgumentException.class)
 
-        when: "try create bootstrap with not initialized sender"
-        new EventSenderBootstrap(shutdownFactory, null, uri, true)
+        when: "try create client with not initialized sender"
+        new EventSenderClient(shutdownFactory, null, uri, true)
 
         then: "expect IllegalArgumentException thrown"
         thrown(IllegalArgumentException.class)
 
-        when: "try create bootstrap with not initialized target"
-        new EventSenderBootstrap(shutdownFactory, senderMock, null, true)
+        when: "try create client with not initialized target"
+        new EventSenderClient(shutdownFactory, senderMock, null, true)
 
         then: "expect IllegalArgumentException thrown"
         thrown(IllegalArgumentException.class)
     }
 
     def "common send without exceptions"() {
-        given: "bootstrap sender instance"
-        EventSenderBootstrap bootstrap = new EventSenderBootstrap(shutdownFactory, senderMock, uri, true)
+        given: "client sender instance"
+        EventSenderClient client = new EventSenderClient(shutdownFactory, senderMock, uri, true)
 
         when: "send message"
-        bootstrap.send()
+        client.send()
 
         then: "expect send correct"
         1 * senderMock.send(_ as URI, _ as TransportMessage) >> { target, TransportMessage message ->
@@ -58,10 +58,10 @@ class EventSenderBootstrapTest extends Specification {
 
     def "check strict mode"() {
         given: "bootstrap with mocked sender"
-        EventSenderBootstrap strictBootstrap = new EventSenderBootstrap(shutdownFactory, senderMock, uri, true)
+        EventSenderClient strictClient = new EventSenderClient(shutdownFactory, senderMock, uri, true)
 
         when: "send message"
-        strictBootstrap.send()
+        strictClient.send()
 
         then: "sender throw exception"
         senderMock.send(_, _) >> { throw new EventSendException("error") }
@@ -72,10 +72,10 @@ class EventSenderBootstrapTest extends Specification {
 
     def "check not strict mode"() {
         given: "bootstrap with mocked sender"
-        EventSenderBootstrap notStrictBootstrap = new EventSenderBootstrap(shutdownFactory, senderMock, uri, false)
+        EventSenderClient notStrictClient = new EventSenderClient(shutdownFactory, senderMock, uri, false)
 
         when: "send message"
-        notStrictBootstrap.send()
+        notStrictClient.send()
 
         then: "sender throw exception"
         senderMock.send(_, _) >> { throw new EventSendException("error") }

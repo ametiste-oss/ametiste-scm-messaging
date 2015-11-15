@@ -18,6 +18,9 @@ import java.util.Collection;
  * Transformed objects publish with Spring {@code ApplicationEventPublisher}. Listeners can handle all {@code Event}
  * objects, concrete subtype of Event or TransportMessage. Last case useful for routers, brokers and other transport
  * services.
+ * <p>
+ * Controller process POST requests to "event-receiver" path with {@literal application-json} content type. When
+ * messages processing success controller return {@literal ACCEPTED 202} status code.
  */
 @RestController
 public class EventReceivingController {
