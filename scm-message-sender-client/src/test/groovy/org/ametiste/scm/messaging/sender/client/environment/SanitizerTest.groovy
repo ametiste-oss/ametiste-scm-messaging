@@ -10,6 +10,14 @@ class SanitizerTest extends Specification {
         sanitizer = new Sanitizer();
     }
 
+    def "validate arguments in setter method"() {
+        when: "try set not initialized keys value"
+        sanitizer.setKeysToSanitize(null)
+
+        then: "expect IllegalArgumentException thrown"
+        thrown(IllegalArgumentException.class)
+    }
+
     def "pattern as sanitize key correct work"() {
         given: "sanitizer with pattern key"
         sanitizer.setKeysToSanitize("^[0-9]*")
