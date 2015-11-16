@@ -4,7 +4,6 @@ import org.ametiste.scm.messaging.data.transport.TransportMessage;
 
 import java.net.URI;
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * {@code EventDTOMessage} is a {@code TransportMessage} with {@code EventDTO} source.

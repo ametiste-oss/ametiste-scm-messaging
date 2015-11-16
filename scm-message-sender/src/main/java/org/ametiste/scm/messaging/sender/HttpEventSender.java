@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 import static org.apache.commons.lang3.Validate.isTrue;
 
 /**
- * {@code HttpEventSender} is a default implementation of {EventSender} interface that send messages via HTTP protocol.
+ * {@code HttpEventSender} is default implementation of {@code EventSender} interface that send messages via HTTP protocol.
  * <p>
  * Sender sent messages as array of objects. If we send one event, sender automatically wrap it.
  */

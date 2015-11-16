@@ -6,12 +6,33 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Defines set of properties that would be used to define instance information.
  * <p>
  * Defined properties are included (org.ametiste.scm.instance.*):
- * <ul>
- * <li>instanceId - unique identifier for service instance (required).</li>
- * <li>version - version of service (required).</li>
- * <li>nodeId - identifier of node where instance located.</li>
- * <li>uri - URI to communicate with instance.</li>
- * </ul>
+ * <table summary="parameters description">
+ *     <tr><td>Name</td><td>Type</td><td>Description</td><td>Default</td></tr>
+ *     <tr>
+ *         <td>instanceId</td>
+ *         <td>String</td>
+ *         <td>Unique identifier for service instance (required).</td>
+ *         <td>(not defined)</td>
+ *     </tr>
+ *     <tr>
+ *         <td>version</td>
+ *         <td>String</td>
+ *         <td>Version of service (required).</td>
+ *         <td>(not defined)</td>
+ *     </tr>
+ *     <tr>
+ *         <td>nodeId</td>
+ *         <td>String</td>
+ *         <td>Identifier of node where instance located.</td>
+ *         <td>(not defined)</td>
+ *     </tr>
+ *     <tr>
+ *         <td>uri</td>
+ *         <td>URI</td>
+ *         <td>URI to communicate with instance.</td>
+ *         <td>(not defined)</td>
+ *     </tr>
+ * </table>
  * <p>
  * This properties doesn't contain default values. If user not define required properties (InstanceId and version) it
  * can't lead to unpredictable behavior.

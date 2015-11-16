@@ -101,12 +101,10 @@ jar {
 }
 
 dependencies {
-    testCompile project(":scm-message-receiver")
-    testCompile project(":scm-message-sender")
-    testCompile project(":scm-message-sender-client")
-    testCompile project(":scm-messages")
+    testCompile project(":scm-message-receiver-starter"),
+                project(":scm-message-sender")
 
-    testCompile libraries.spock
-    testCompile libraries.spockSpring
-    testCompile libraries.springBootTest
+    testCompile libraries.spock,
+                libraries.spockSpring,
+                libraries.springBootTest
 }

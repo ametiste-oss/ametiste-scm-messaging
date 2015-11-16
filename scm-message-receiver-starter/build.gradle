@@ -1,0 +1,8 @@
+description = 'SCM Message Receiver Spring Boot Starter'
+
+apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray.gradle"
+
+dependencies {
+    compile project(path: ':scm-message-receiver')
+    compile libraries.springBoot
+}
