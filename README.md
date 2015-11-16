@@ -6,6 +6,7 @@ Link to umbrella project: [>> System's Configuration Management <<](https://gith
 [![Build Status](https://travis-ci.org/ametiste-oss/ametiste-scm-messaging.svg?branch=master)](https://travis-ci.org/ametiste-oss/ametiste-scm-messaging)
 [![Codacy Badge](https://api.codacy.com/project/badge/7ad6ce9909944604a65fa57e4d48d2a7)](https://www.codacy.com/app/bliznyuk-andrey/ametiste-scm-messaging)
 [![codecov.io](https://codecov.io/github/ametiste-oss/ametiste-scm-messaging/coverage.svg?branch=master&precision=2)](https://codecov.io/github/ametiste-oss/ametiste-scm-messaging?branch=master)
+[ ![Download](https://api.bintray.com/packages/ametiste-oss/maven/scm-messages/images/download.svg) ](https://bintray.com/ametiste-oss/maven/scm-messages/_latestVersion)
 
 ## Table Of Content
 - [Overview](#overview)
