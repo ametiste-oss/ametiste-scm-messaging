@@ -10,11 +10,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
  * Minimal configuration for testing messaging via HTTP protocol.
- * Context includes EventReceiverController from scm-messaging-receiver module.
+ * Context includes EventReceiverController with scm-messaging-receiver-starter module.
  */
 @SpringBootApplication
 @EnableWebMvc
-@ComponentScan("org.ametiste.scm.messaging.receiver")
 public class HttpMessagingContext {
 
     @Bean

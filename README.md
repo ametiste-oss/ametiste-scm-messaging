@@ -42,8 +42,10 @@ Library contains set of modules, each of them responsible for one of processing 
 - scm-messages-http;
 - scm-messages-mongo;
 - scm-message-receiver;
+- scm-message-receiver-starter;
 - scm-message-sender;
-- scm-message-sender-client.
+- scm-message-sender-client;
+- scm-message-sender-client-starter.
 
 ###### Entity modules
 
@@ -116,12 +118,13 @@ properties.put("retry", 15);
 URI target = new URI("http://192.168.0.5/endpoint");
 URI excluded = new URI("http://192.168.0.5/endpoint");
  
-InstanceStartupEvent event = InstanceStartupEvent.builder()
-        .addInstanceId("DEBS")
-        .addVersion("0.1.5-RELEASE")
-        .addProperties(properties)
-        .addNodeId("AWS1.RAIN")
-        .addUri(new URI("http://192.168.0.2/endpoint"))
+InstanceLifecycleEvent event = InstanceLifecycleEvent.builder()
+        .type(STARTUP)
+        .instanceId("DEBS")
+        .version("0.1.5-RELEASE")
+        .properties(properties)
+        .nodeId("AWS1.RAIN")
+        .uri(new URI("http://192.168.0.2/endpoint"))
         .build();
  
 TransportMessage<Event> message = new TransportMessage<>(event, Collections.singleton(excluded));
