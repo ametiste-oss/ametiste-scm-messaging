@@ -1,11 +1,11 @@
 package org.ametiste.scm.messaging.sender.client.environment;
 
-import org.springframework.util.Assert;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.Validate.isTrue;
 
 /**
  * {@code Sanitizer} replace values of secret properties with asterisks.
@@ -29,7 +29,7 @@ public class Sanitizer {
      * @param keysToSanitize the keys to sanitize
      */
     public void setKeysToSanitize(String... keysToSanitize) {
-        Assert.notNull(keysToSanitize, "KeysToSanitize must not be null");
+        isTrue(keysToSanitize != null, "KeysToSanitize must not be null");
 
         this.keysToSanitize = Arrays.stream(keysToSanitize)
                 .map(this::getPattern)

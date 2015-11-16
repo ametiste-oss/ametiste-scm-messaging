@@ -6,9 +6,10 @@ import org.ametiste.scm.messaging.sender.EventSender;
 import org.ametiste.scm.messaging.sender.client.event.EventFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.Assert;
 
 import java.net.URI;
+
+import static org.apache.commons.lang3.Validate.isTrue;
 
 /**
  * {@code EventSenderClient} class provides functionality to send event from service instance. For example, when instance
@@ -38,9 +39,9 @@ public class EventSenderClient {
      * @param isStrict flag that define errors processing policy.
      */
     public EventSenderClient(EventFactory factory, EventSender sender, URI target, boolean isStrict) {
-        Assert.notNull(factory);
-        Assert.notNull(sender);
-        Assert.notNull(target);
+        isTrue(factory != null, "'factory' must be initialized");
+        isTrue(sender != null, "'sender' must be initialized");
+        isTrue(target != null, "'target' must be initialized");
 
         this.factory = factory;
         this.sender = sender;

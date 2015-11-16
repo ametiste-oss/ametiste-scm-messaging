@@ -2,11 +2,11 @@ package org.ametiste.scm.messaging.sender.client.event;
 
 import org.ametiste.scm.messaging.data.event.Event;
 import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent;
-import org.springframework.util.Assert;
 
 import java.net.URI;
 
 import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type.SHUTDOWN;
+import static org.apache.commons.lang3.Validate.notBlank;
 
 public class ShutdownEventFactory implements EventFactory {
 
@@ -16,8 +16,8 @@ public class ShutdownEventFactory implements EventFactory {
     private final URI uri;
 
     public ShutdownEventFactory(String instanceId, String version, String nodeId, URI uri) {
-        Assert.hasText(instanceId, "'instanceId' must be initialized");
-        Assert.hasText(version, "'version' must be initialized");
+        notBlank(instanceId, "'instanceId' must be initialized and contains text");
+        notBlank(version, "'version' must be initialized and contains text");
 
         this.instanceId = instanceId;
         this.version = version;

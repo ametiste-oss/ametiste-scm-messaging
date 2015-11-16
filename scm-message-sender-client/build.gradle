@@ -7,10 +7,11 @@ apply plugin: 'groovy'
 dependencies {
     compile project(":scm-message-sender")
 
-    compile libraries.slf4j
-    compile libraries.springCore
+    compile libraries.commonLang3,
+            libraries.slf4j,
+            libraries.springCore
 
-    testCompile libraries.spock
-    testCompile libraries.spockSpring
-    testCompile libraries.springBootTest
+    testCompile libraries.spock,
+            libraries.spockSpring,
+            libraries.springBootTest
 }
