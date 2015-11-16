@@ -64,6 +64,14 @@ If you need use other framework you can simply provide API method for receiving 
 
 **scm-message-sender-client** module contains clients of sender module that provides fucntionality for creating and send events about different aspects of service lifecycle.
 
+###### Starters
+
+Library oriented for usage with Spring Framework and contains two SpringBoot starter for simple add libarary functionality to application context.
+
+**scm-message-receiver-starter** add to context event receiving and publishing mechanisms.
+
+**scm-message-sender-client-starter** module add to applcaition context logic of instance lifecycle event sending.
+
 ## Core Components
 
 Main components is sender, receiver, data models and DTO.
@@ -78,7 +86,7 @@ Receiver is a endpoint that receive messages, convert them to events and publish
 
 ### Data models
 Represents group of entity that system operates.
-![Data models](https://cloud.githubusercontent.com/assets/11256858/10567348/589c59cc-760a-11e5-8aeb-97f28cf79f38.png)
+![Data models](https://cloud.githubusercontent.com/assets/11256858/11195606/630c7186-8cbb-11e5-98a8-f5c69f423802.png)
 
 ### Components Usage
 
@@ -147,6 +155,17 @@ dependencies {
 ```
 Than add to component scan package `org.ametiste.scm.messaging.receiver`. After that you have controller in context and can create listeners for processing events. For listening only `TransportMessage<Event>` use `EventTransportMessage` class (it resolve "Type Erasure" problem).
 
+In case when you use library with SpringBoot you can add all needed functionality and settings with starter:
+```java
+repository {
+  jcenter()
+}
+
+dependencies {
+  compile "org.ametiste.scm:scm-messase-receiver-starter:{version}
+}
+```
+
 ##### Supported environment
 - JDK 1.8 or higher
 - spring-context: 4.2.0.RELEASE or higher
@@ -175,7 +194,7 @@ public void onCustomEventSubtype(InstanceStartupEvent event) {}
 ## Clients
 
 ### Startup Event Sender
-Event Sender Client designed to simplify process of integration with System Configuration Management system. Client create event and send it with event sender component to Event Broker. Client use Spring Boot configuration functionality and it involves use in Spring Boot applications.
+Event Sender Client designed to simplify process of integration with System Configuration Management system. Clients create events and send it with event sender component to Event Broker. Client use Spring Boot configuration functionality and it involves use in Spring Boot applications.
 
 #### Usage
 
@@ -199,8 +218,20 @@ public class ApplicationContext() {
 }
 ```
 
+Or simple use SpringBoot Starter:
+```java
+repository {
+  jcenter()
+}
+
+dependencies {
+  compile "org.ametiste.scm:scm-messase-sender-client-starter:{version}
+}
+```
+All needed configuration automatic will be add to applcaition context.
+
 ###### Configuration Properties
-Client has set of properties that must be defined in application.
+Clients has set of properties that must be defined in application.
 
 **HttpClient properties**
 
@@ -240,22 +271,30 @@ _Note_: (warning) bold marked properties are required. Other fields may be ommit
 #### Logic of operations
 ##### Structure
 Structure of Sender Client shown below in class diargam:
-![Sender Client Class Diagram](https://cloud.githubusercontent.com/assets/11256858/10591848/25f03202-76c1-11e5-9dce-bab93c01cdb4.png)
+![Sender Client Class Diagram](https://cloud.githubusercontent.com/assets/11256858/11196093/446708a6-8cbe-11e5-957c-3a43f8294d0f.png)
 
 Main actors is:
-- *EventSenderBootstrap* - execute send opration;
+- *EventSenderClient* - execute send opration;
 - *EventFacory* - create event for sending;
 - *AppPropertiesAggregator* - gather all available properties for event.
 
-##### Flow
+Client starter contains two clients: Startup and Shutdown Event sender clients. Each of them responsible to send signal about some lifecycle change in service instance.
+
+##### Flow (Startup)
 1. AppPropertiesAggregator gather properties (logic borrowed from Spring Actuator environment enpoint).
 2. All porperites processed through Satinizer that hide all secret fields (password, credentials, etc.).
 3. AppPropertiesAggregator return map with properties to EventFactory construction.
-4. Bootstrap include all dependencies and after creation execute send() method:
+4. Startup event client include all dependencies and after creation execute send() method:
   1. create event with EventFactory;
   2. send event with EventSender to target.
 
 This flow repeat every once when instance startup.
+
+##### Flow (Shutdown)
+1. On context desctory routine invoke method with `@PreDesctoy` annotation;
+2. method call Shutdown Event client `send()` method.
+
+This flow repeat every instance shutdown.
 
 ## How To
 ### Add new event type
