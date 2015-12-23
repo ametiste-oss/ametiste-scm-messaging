@@ -2,6 +2,7 @@ package org.ametiste.scm.messaging.sender.client.config;
 
 import org.ametiste.scm.messaging.sender.EventSender;
 import org.ametiste.scm.messaging.sender.HttpEventSender;
+import org.ametiste.scm.messaging.sender.client.EventSenderClient;
 import org.ametiste.scm.messaging.sender.client.environment.AppPropertiesAggregator;
 import org.ametiste.scm.messaging.sender.client.event.EventFactory;
 import org.ametiste.scm.messaging.sender.client.event.ShutdownEventFactory;
@@ -15,6 +16,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.net.URI;
 import java.net.URISyntaxException;
 
