@@ -11,30 +11,64 @@ import static org.apache.commons.lang3.Validate.isTrue;
 import static org.apache.commons.lang3.Validate.notBlank;
 
 /**
- * {@code StartupInstanceEventFactory} create event ({@code InstanceStartupEvent}) for sending on instance startup.
+ * {@code StartupEventFactory} create event ({@code InstanceStartupEvent}) for sending on instance startup.
+ * <p>
+ * Factory has set of setter methods for complete event components. On set operation no validation pass. Required
+ * fields and constraints check immediately before event creation.
+ *
+ * @since 0.1.0
  */
 public class StartupEventFactory implements EventFactory {
 
-    private final String instanceId;
-    private final String version;
-    private final String nodeId;
-    private final URI uri;
-    private final Map<String, Object> properties;
+    private String instanceId;
+    private String version;
+    private String nodeId;
+    private URI uri;
+    private Map<String, Object> properties;
 
-    public StartupEventFactory(String instanceId, String version, String nodeId, URI uri, Map<String, Object> properties) {
-        notBlank(instanceId, "'instanceId' must be initialized and contains text");
-        notBlank(version, "'version' must be initialized and contains text");
-        isTrue(properties != null, "'properties' must be initialized");
+    public String getInstanceId() {
+        return instanceId;
+    }
 
+    public void setInstanceId(String instanceId) {
         this.instanceId = instanceId;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getNodeId() {
+        return nodeId;
+    }
+
+    public void setNodeId(String nodeId) {
         this.nodeId = nodeId;
+    }
+
+    public URI getUri() {
+        return uri;
+    }
+
+    public void setUri(URI uri) {
         this.uri = uri;
+    }
+
+    public Map<String, Object> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Map<String, Object> properties) {
         this.properties = properties;
     }
 
     @Override
     public Event createEvent() {
+        validateState();
         return InstanceLifecycleEvent.builder()
                 .type(STARTUP)
                 .instanceId(instanceId)
@@ -43,5 +77,11 @@ public class StartupEventFactory implements EventFactory {
                 .nodeId(nodeId)
                 .uri(uri)
                 .build();
+    }
+
+    private void validateState() {
+        notBlank(instanceId, "'instanceId' must be initialized and contains text");
+        notBlank(version, "'version' must be initialized and contains text");
+        isTrue(properties != null, "'properties' must be initialized");
     }
 }

@@ -1,5 +1,6 @@
 package org.ametiste.scm.messaging.sender.client.event
 
+import org.ametiste.scm.messaging.data.event.Event
 import org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent
 import spock.lang.Specification
 
@@ -8,45 +9,83 @@ import static org.ametiste.scm.messaging.data.event.InstanceLifecycleEvent.Type.
 
 class StartupEventFactoryTest extends Specification {
 
-    def "arguments validation"() {
-        when: "try create event factory with not initialized instanceId"
-        new StartupEventFactory(null, "0.1.0", null, null, emptyMap())
+    StartupEventFactory factory;
+
+    def "fields validation"() {
+        when: "try create event with not initialized instanceId"
+        factory = new StartupEventFactory()
+        factory.setInstanceId(null)
+        factory.setVersion("0.1.0")
+        factory.setNodeId(null)
+        factory.setUri(null)
+        factory.setProperties(emptyMap())
+        factory.createEvent()
 
         then: "expect exception will thrown"
         thrown(Exception.class)
 
-        when: "try create event factory with empty instanceId"
-        new StartupEventFactory("", "0.1.0", null, null, emptyMap())
+        when: "try create event with empty instanceId"
+        factory = new StartupEventFactory()
+        factory.setInstanceId("")
+        factory.setVersion("0.1.0")
+        factory.setNodeId(null)
+        factory.setUri(null)
+        factory.setProperties(emptyMap())
+        factory.createEvent()
 
         then: "expect exception will thrown"
         thrown(Exception.class)
 
-        when: "try create event factory with not initialized version"
-        new StartupEventFactory("search", null, null, null, emptyMap())
+        when: "try create event with not initialized version"
+        factory = new StartupEventFactory()
+        factory.setInstanceId("search")
+        factory.setVersion(null)
+        factory.setNodeId(null)
+        factory.setUri(null)
+        factory.setProperties(emptyMap())
+        factory.createEvent()
 
         then: "expect exception will thrown"
         thrown(Exception.class)
 
-        when: "try create event factory with empty version"
-        new StartupEventFactory("search", "", null, null, emptyMap())
+        when: "try create event with empty version"
+        factory = new StartupEventFactory()
+        factory.setInstanceId("search")
+        factory.setVersion("")
+        factory.setNodeId(null)
+        factory.setUri(null)
+        factory.setProperties(emptyMap())
+        factory.createEvent()
 
         then: "expect exception will thrown"
         thrown(Exception.class)
 
-        when: "try create event factory with not initialized properties"
-        new StartupEventFactory("search", "0.1.0", null, null, null)
+        when: "try create event with not initialized properties"
+        factory = new StartupEventFactory()
+        factory.setInstanceId("search")
+        factory.setVersion("0.1.0")
+        factory.setNodeId(null)
+        factory.setUri(null)
+        factory.setProperties(null)
+        factory.createEvent()
 
         then: "expect Exception will thrown"
         thrown(Exception.class)
 
-        when: "try create event factory with valid required parameters"
-        StartupEventFactory factory = new StartupEventFactory("search", "0.1.0", null, null, emptyMap())
+        when: "try create event with valid required parameters"
+        factory = new StartupEventFactory()
+        factory.setInstanceId("search")
+        factory.setVersion("0.1.0")
+        factory.setNodeId(null)
+        factory.setUri(null)
+        factory.setProperties(emptyMap())
+        Event event = factory.createEvent()
 
         then: "expect no exception thrown"
         noExceptionThrown()
 
-        and: "get not null instance of event factory"
-        factory != null
+        and: "get not null instance of event"
+        event != null
     }
 
     def "should create correct event"() {
