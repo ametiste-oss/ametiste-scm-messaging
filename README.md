@@ -101,7 +101,7 @@ repository {
 }
 
 dependencies {
-  compile "org.ametiste.scm:scm-messase-sender:{version}
+  compile "org.ametiste.scm:scm-message-sender:{version}
 }
 ```
 Than create instance of EventSender and use it.
@@ -151,7 +151,7 @@ repository {
 }
 
 dependencies {
-  compile "org.ametiste.scm:scm-messase-receiver:{version}
+  compile "org.ametiste.scm:scm-message-receiver:{version}
 }
 ```
 Than add to component scan package `org.ametiste.scm.messaging.receiver`. After that you have controller in context and can create listeners for processing events. For listening only `TransportMessage<Event>` use `EventTransportMessage` class (it resolve "Type Erasure" problem).
@@ -163,7 +163,7 @@ repository {
 }
 
 dependencies {
-  compile "org.ametiste.scm:scm-messase-receiver-starter:{version}
+  compile "org.ametiste.scm:scm-message-receiver-starter:{version}
 }
 ```
 
@@ -207,7 +207,7 @@ repository {
 }
 
 dependencies {
-  compile "org.ametiste.scm:scm-messase-sender-client:{version}
+  compile "org.ametiste.scm:scm-message-sender-client:{version}
 }
 ```
 Than include to application context configuration class `org.ametiste.scm.messaging.sender.client.config.StartupEventSendConfiguration`.
@@ -226,7 +226,7 @@ repository {
 }
 
 dependencies {
-  compile "org.ametiste.scm:scm-messase-sender-client-starter:{version}
+  compile "org.ametiste.scm:scm-message-sender-client-starter:{version}
 }
 ```
 All needed configuration automatic will be add to applcaition context.
