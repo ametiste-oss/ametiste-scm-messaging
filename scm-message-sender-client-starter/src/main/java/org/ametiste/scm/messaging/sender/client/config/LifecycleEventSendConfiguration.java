@@ -75,7 +75,7 @@ public class LifecycleEventSendConfiguration {
                 instanceProps.getInstanceId(),
                 instanceProps.getVersion(),
                 instanceProps.getNodeId(),
-                new URI(instanceProps.getUri()),
+                safeUri(instanceProps.getUri()),
                 propertiesAggregator().aggregateProperties(env));
     }
 
@@ -86,7 +86,7 @@ public class LifecycleEventSendConfiguration {
                 instanceProps.getInstanceId(),
                 instanceProps.getVersion(),
                 instanceProps.getNodeId(),
-                new URI(instanceProps.getUri())
+                safeUri(instanceProps.getUri())
         );
     }
 
@@ -97,7 +97,7 @@ public class LifecycleEventSendConfiguration {
         return new EventSenderClient(
                 startupEventFactory(),
                 eventSender(),
-                new URI(clientProps.getTargetUri()),
+                safeUri(clientProps.getTargetUri()),
                 clientProps.isStrict()
         );
     }
@@ -109,7 +109,7 @@ public class LifecycleEventSendConfiguration {
         return new EventSenderClient(
                 shutdownEventFactory(),
                 eventSender(),
-                new URI(clientProps.getTargetUri()),
+                safeUri(clientProps.getTargetUri()),
                 clientProps.isStrict()
         );
     }
@@ -126,5 +126,16 @@ public class LifecycleEventSendConfiguration {
         if (shutdownEventSenderClient() != null) {
             shutdownEventSenderClient().send();
         }
+    }
+
+    /**
+     * Safe processing of uri string parameter. If string is {@code null} method returns {@code null} without exceptions.
+     * If string is set but not valid uri method fail with {@code java.net.MalformedURLException}.
+     *
+     * @param uri uri string value.
+     * @return {@code URI} instance or {@code null} id input is null.
+     */
+    private static URI safeUri(String uri) {
+        return (uri != null) ? URI.create(uri) : null;
     }
 }
