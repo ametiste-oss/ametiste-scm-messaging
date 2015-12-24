@@ -58,7 +58,7 @@ public class EventSenderClient {
     public void send() {
         try {
             sender.send(target, new TransportMessage<>(factory.createEvent()));
-        } catch (EventSendException e) {
+        } catch (Exception e) {
             if (isStrict) {
                 throw e;
             } else {
