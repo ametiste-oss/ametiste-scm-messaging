@@ -29,26 +29,20 @@ import java.net.URISyntaxException;
  * without configuration. Events creates with {@code EventFactory} instances. Each of them has qualifier and can be
  * autowired in other part of context.
  * <p>
- * Client instances can be disabled with property {@code org.ametiste.scm.messaging.sender.client.enabled}. By default
- * configuration create two clients: one for each lifecycle event. Startup event send after context constructed
- * (method with {@code PostConstruct} annotation. Shutdown event before context destroy (method with {@code PreDestroy}
- * annotation).
- * <p>
  * All configuration can be excluded from context with property {@code org.ametiste.scm.messaging.sender.enabled} set to false.
+ *
+ * @since 0.1.0
  */
 @Configuration
 @ConditionalOnProperty(value = "org.ametiste.scm.messaging.sender.enabled", matchIfMissing = true)
-@EnableConfigurationProperties({ HttpClientProperties.class, InstanceInfoProperties.class, ClientProperties.class })
-public class LifecycleEventSendConfiguration {
+@EnableConfigurationProperties({ HttpClientProperties.class, InstanceInfoProperties.class })
+public class LifecycleEventsConfiguration {
 
     @Autowired
     private HttpClientProperties httpClientProps;
 
     @Autowired
     private InstanceInfoProperties instanceProps;
-
-    @Autowired
-    private ClientProperties clientProps;
 
     @Autowired
     private Environment env;
@@ -71,60 +65,34 @@ public class LifecycleEventSendConfiguration {
     @Bean
     @Qualifier("startupEventFactory")
     public EventFactory startupEventFactory() throws URISyntaxException {
-        return new StartupEventFactory(
-                instanceProps.getInstanceId(),
-                instanceProps.getVersion(),
-                instanceProps.getNodeId(),
-                new URI(instanceProps.getUri()),
-                propertiesAggregator().aggregateProperties(env));
+        StartupEventFactory factory = new StartupEventFactory();
+        factory.setInstanceId(instanceProps.getInstanceId());
+        factory.setVersion(instanceProps.getVersion());
+        factory.setNodeId(instanceProps.getNodeId());
+        factory.setUri(safeUri(instanceProps.getUri()));
+        factory.setProperties(propertiesAggregator().aggregateProperties(env));
+        return factory;
     }
 
     @Bean
     @Qualifier("shutdownEventFactory")
     public EventFactory shutdownEventFactory() throws URISyntaxException {
-        return new ShutdownEventFactory(
-                instanceProps.getInstanceId(),
-                instanceProps.getVersion(),
-                instanceProps.getNodeId(),
-                new URI(instanceProps.getUri())
-        );
+        ShutdownEventFactory factory = new ShutdownEventFactory();
+        factory.setInstanceId(instanceProps.getInstanceId());
+        factory.setVersion(instanceProps.getVersion());
+        factory.setNodeId(instanceProps.getNodeId());
+        factory.setUri(safeUri(instanceProps.getUri()));
+        return factory;
     }
 
-    @Bean
-    @Qualifier("startupEventSenderClient")
-    @ConditionalOnProperty(value = "org.ametiste.scm.messaging.sender.client.enabled", matchIfMissing = true)
-    public EventSenderClient startupEventSenderClient() throws URISyntaxException {
-        return new EventSenderClient(
-                startupEventFactory(),
-                eventSender(),
-                new URI(clientProps.getTargetUri()),
-                clientProps.isStrict()
-        );
-    }
-
-    @Bean
-    @Qualifier("shutdownEventSenderClient")
-    @ConditionalOnProperty(value = "org.ametiste.scm.messaging.sender.client.enabled", matchIfMissing = true)
-    public EventSenderClient shutdownEventSenderClient() throws URISyntaxException {
-        return new EventSenderClient(
-                shutdownEventFactory(),
-                eventSender(),
-                new URI(clientProps.getTargetUri()),
-                clientProps.isStrict()
-        );
-    }
-
-    @PostConstruct
-    public void sendStartupEvent() throws URISyntaxException {
-        if (startupEventSenderClient() != null) {
-            startupEventSenderClient().send();
-        }
-    }
-
-    @PreDestroy
-    public void sendShutdownEvent() throws URISyntaxException {
-        if (shutdownEventSenderClient() != null) {
-            shutdownEventSenderClient().send();
-        }
+    /**
+     * Safe processing of uri string parameter. If string is {@code null} method returns {@code null} without exceptions.
+     * If string is set but not valid uri method fail with {@code java.net.MalformedURLException}.
+     *
+     * @param uri uri string value.
+     * @return {@code URI} instance or {@code null} id input is null.
+     */
+    private static URI safeUri(String uri) {
+        return (uri != null) ? URI.create(uri) : null;
     }
 }

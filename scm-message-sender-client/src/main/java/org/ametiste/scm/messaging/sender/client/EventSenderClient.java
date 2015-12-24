@@ -58,13 +58,13 @@ public class EventSenderClient {
     public void send() {
         try {
             sender.send(target, new TransportMessage<>(factory.createEvent()));
-        } catch (EventSendException e) {
+            logger.debug("SCM Event sent successful.");
+        } catch (Exception e) {
             if (isStrict) {
                 throw e;
             } else {
-                if (logger.isDebugEnabled()) {
-                    logger.warn(e.getMessage(), e);
-                }
+                logger.warn("Failed to send SCM event. Reason: {}", e.getMessage());
+                logger.debug(e.getMessage(), e);
             }
         }
     }

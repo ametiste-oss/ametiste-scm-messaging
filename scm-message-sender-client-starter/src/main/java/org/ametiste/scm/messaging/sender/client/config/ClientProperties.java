@@ -24,8 +24,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *     <tr>
  *         <td>targetUri</td>
  *         <td>URI</td>
- *         <td>URI to send event. If parameter will not be define bootstrap fall on URI creation step.</td>
- *         <td>(not defined)</td>
+ *         <td>URI to send event.</td>
+ *         <td>http://localhost/event-receiver</td>
  *     </tr>
  * </table>
  * <p>
@@ -36,7 +36,7 @@ public class ClientProperties {
 
     private boolean enabled = true;
     private boolean strict = false;
-    private String targetUri;
+    private String targetUri = "http://localhost/event-receiver";
 
     public boolean isEnabled() {
         return enabled;
