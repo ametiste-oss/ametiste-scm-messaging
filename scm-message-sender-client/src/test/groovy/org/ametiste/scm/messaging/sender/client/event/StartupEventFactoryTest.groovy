@@ -97,7 +97,12 @@ class StartupEventFactoryTest extends Specification {
         def properties = Collections.singletonMap("server.port", 8085);
 
         given: "event factory"
-        def factory = new StartupEventFactory(instanceId, version, nodeId, uri, properties);
+        def factory = new StartupEventFactory()
+        factory.setInstanceId(instanceId)
+        factory.setVersion(version)
+        factory.setNodeId(nodeId)
+        factory.setUri(uri)
+        factory.setProperties(properties)
 
         when: "factory create event"
         InstanceLifecycleEvent event = (InstanceLifecycleEvent)factory.createEvent();

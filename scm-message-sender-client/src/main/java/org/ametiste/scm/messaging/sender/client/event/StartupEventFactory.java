@@ -26,6 +26,40 @@ public class StartupEventFactory implements EventFactory {
     private URI uri;
     private Map<String, Object> properties;
 
+    /**
+     * Default constructor. Create {@code StartupEventFactory} object with not initialized fields.
+     */
+    public StartupEventFactory() {}
+
+    /**
+     * Create {@code StartupEventFactory} instance with specified instance id, version and config properties.
+     *
+     * @param instanceId instance identifier.
+     * @param version instance version.
+     * @param properties instance configuration properties.
+     */
+    public StartupEventFactory(String instanceId, String version, Map<String, Object> properties) {
+        this.instanceId = instanceId;
+        this.version = version;
+        this.properties = properties;
+    }
+
+    /**
+     * Create {@code ShutdownEventFactory} instance with all initialized fields.
+     *
+     * @param instanceId instance identifier.
+     * @param version instance version.
+     * @param nodeId instance node id.
+     * @param uri instance uri for communication.
+     */
+    public StartupEventFactory(String instanceId, String version, String nodeId, URI uri, Map<String, Object> properties) {
+        this.instanceId = instanceId;
+        this.version = version;
+        this.nodeId = nodeId;
+        this.uri = uri;
+        this.properties = properties;
+    }
+
     public String getInstanceId() {
         return instanceId;
     }
@@ -79,6 +113,10 @@ public class StartupEventFactory implements EventFactory {
                 .build();
     }
 
+    /**
+     * Validate method check that factory has all required fields and pass all required constrains
+     * for correct event creation.
+     */
     private void validateState() {
         notBlank(instanceId, "'instanceId' must be initialized and contains text");
         notBlank(version, "'version' must be initialized and contains text");

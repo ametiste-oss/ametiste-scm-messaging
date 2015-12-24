@@ -25,6 +25,37 @@ public class ShutdownEventFactory implements EventFactory {
     private String nodeId;
     private URI uri;
 
+    /**
+     * Default constructor. Create {@code ShutdownEventFactory} object with not initialized fields.
+     */
+    public ShutdownEventFactory() {}
+
+    /**
+     * Create {@code ShutdownEventFactory} instance with specified instance id and version.
+     *
+     * @param instanceId instance identifier.
+     * @param version instance version.
+     */
+    public ShutdownEventFactory(String instanceId, String version) {
+        this.instanceId = instanceId;
+        this.version = version;
+    }
+
+    /**
+     * Create {@code ShutdownEventFactory} instance with all initialized fields.
+     *
+     * @param instanceId instance identifier.
+     * @param version instance version.
+     * @param nodeId instance node id.
+     * @param uri instance uri for communication.
+     */
+    public ShutdownEventFactory(String instanceId, String version, String nodeId, URI uri) {
+        this.instanceId = instanceId;
+        this.version = version;
+        this.nodeId = nodeId;
+        this.uri = uri;
+    }
+
     public String getInstanceId() {
         return instanceId;
     }
@@ -69,6 +100,10 @@ public class ShutdownEventFactory implements EventFactory {
                 .build();
     }
 
+    /**
+     * Validate method check that factory has all required fields and pass all required constrains
+     * for correct event creation.
+     */
     private void validateState() {
         notBlank(instanceId, "'instanceId' must be initialized and contains text");
         notBlank(version, "'version' must be initialized and contains text");

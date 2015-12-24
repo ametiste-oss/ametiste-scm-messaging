@@ -78,7 +78,7 @@ class ShutdownEventFactoryTest extends Specification {
         def uri = URI.create("http://localhost:8085")
 
         given: "event factory"
-        def factory = new ShutdownEventFactory(instanceId, version, nodeId, uri);
+        def factory = new ShutdownEventFactory(instanceId, version, nodeId, uri)
 
         when: "factory create event"
         InstanceLifecycleEvent event = (InstanceLifecycleEvent)factory.createEvent();
