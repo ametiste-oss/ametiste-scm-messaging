@@ -3,13 +3,10 @@ package org.ametiste.scm.messaging.sender.client.config;
 import org.ametiste.scm.messaging.sender.EventSender;
 import org.ametiste.scm.messaging.sender.client.EventSenderClient;
 import org.ametiste.scm.messaging.sender.client.event.EventFactory;
-import org.ametiste.scm.messaging.sender.client.event.StartupEventFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -45,9 +42,17 @@ public class MessagingClientsConfiguration {
     @Autowired
     private EventFactory shutdownEventFactory;
 
-    @Bean
-    @Qualifier("startupEventSenderClient")
-    public EventSenderClient startupEventSenderClient() throws URISyntaxException {
+    @PostConstruct
+    public void sendStartupEvent() throws URISyntaxException {
+        startupEventSenderClient().send();
+    }
+
+    @PreDestroy
+    public void sendShutdownEvent() throws URISyntaxException {
+        shutdownEventSenderClient().send();
+    }
+
+    private EventSenderClient startupEventSenderClient() throws URISyntaxException {
         return new EventSenderClient(
                 startupEventFactory,
                 eventSender,
@@ -56,30 +61,13 @@ public class MessagingClientsConfiguration {
         );
     }
 
-    @Bean
-    @Qualifier("shutdownEventSenderClient")
-    @ConditionalOnProperty(value = "org.ametiste.scm.messaging.sender.client.enabled", matchIfMissing = true)
-    public EventSenderClient shutdownEventSenderClient() throws URISyntaxException {
+    private EventSenderClient shutdownEventSenderClient() throws URISyntaxException {
         return new EventSenderClient(
                 shutdownEventFactory,
                 eventSender,
                 safeUri(clientProps.getTargetUri()),
                 clientProps.isStrict()
         );
-    }
-
-    @PostConstruct
-    public void sendStartupEvent() throws URISyntaxException {
-        if (startupEventSenderClient() != null) {
-            startupEventSenderClient().send();
-        }
-    }
-
-    @PreDestroy
-    public void sendShutdownEvent() throws URISyntaxException {
-        if (shutdownEventSenderClient() != null) {
-            shutdownEventSenderClient().send();
-        }
     }
 
     /**
