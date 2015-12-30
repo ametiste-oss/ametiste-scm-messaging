@@ -14,3 +14,8 @@ Starter logic improvement:
 - service not crash on clients property set `false` [#20](https://github.com/ametiste-oss/ametiste-scm-messaging/issues/20);
 - default `targetUri` provided;
 - refactoring of `EventFactories`.
+
+### v0.1.2
+
+Bug fix:
+- fix shutdown event sent [#22](https://github.com/ametiste-oss/ametiste-scm-messaging/issues/22).
